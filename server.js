@@ -54,4 +54,35 @@ client.on('end', () => console.log('Client disconnected'));
 
 });
 
+server.listen(port, () =>
+{
+    fs.readFile("qa.json", (err, data) =>
+    {
+        if (err) 
+		{
+            console.error("Error with JSON file");
+        }
+        else
+		{
+            json_q = JSON.parse(data);
+        }
+    });
+});
 
+
+function rand_ans(question)
+{
+    for (let i = 0; i < json_q.length; i++)
+    {
+        if (json_q[i].question === question) 
+		{
+            return Math.floor(Math.random() * 2) === 0 ? json_q[i].ans : json_q[i].wrong_ans;
+        }
+    }
+    return UNKNOWN_VALUE;
+}
+
+function log(clientId, line, sender)
+{
+    fs.appendFileSync(LOGS_DIRECTORY + "/" + clientId + ".log", sender + ": " + line + "\n");
+}
