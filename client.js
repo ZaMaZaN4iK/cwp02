@@ -71,16 +71,16 @@ client.on('close', function()
 });
 
 // SO. Is there smth in NPM?
-function shuffle(array)
-{
-    let size = array.length;
-    while (size > 0) 
-	{
-        let index = Math.floor(Math.random() * size);
-        size--;
-        let temp = array[size];
-        array[size] = array[index];
-        array[index] = temp;
-    }
-    return array;
-}
+//function shuffle(array)
+//{
+//    let size = array.length;
+//    while (size > 0) 
+//	{
+//        let index = Math.floor(Math.random() * size);
+//        size--;
+//        let temp = array[size];
+//        array[size] = array[index];
+//        array[index] = temp;
+//    }
+//    return array;
+//}
