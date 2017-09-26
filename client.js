@@ -36,4 +36,51 @@ client.connect(port, function()
     });
 });
 
+client.on('data', function(data) 
+{
+    if (data === ACKNOWLEDGE) 
+	{
+        client.write(questions[0].question);
+    }
+    if (data === DECLINE)
+	{
+        client.destroy();
+        process.terminate();
+    }
+    if (data !== ACKNOWLEDGE) 
+	{
+        console.log("Question: " + questions[ind].question);
+        console.log("Answer: " + data);
+        console.log("Is right: " + (data === questions[ind].ans ? "Yes" : "No"));
+        if (ind + 1 === questions.length) 
+		{
+            console.log("Questions are over");
+            client.destroy();
+        }
+        else
+		{
+			++ind;
+            client.write(questions[ind].question);
+        }
+    }
+});
 
+client.on('close', function() 
+{
+    console.log('Connection closed');
+});
+
+// SO. Is there smth in NPM?
+function shuffle(array)
+{
+    let size = array.length;
+    while (size > 0) 
+	{
+        let index = Math.floor(Math.random() * size);
+        size--;
+        let temp = array[size];
+        array[size] = array[index];
+        array[index] = temp;
+    }
+    return array;
+}
